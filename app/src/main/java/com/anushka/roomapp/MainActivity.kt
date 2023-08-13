@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         val db = Room.databaseBuilder(
                 applicationContext,
-                BookDatabase::class.java, "book_database"
+                BookDatabase::class.java, "sampingan_database"
         ).build()
 
         bookDao = db.bookDao()
