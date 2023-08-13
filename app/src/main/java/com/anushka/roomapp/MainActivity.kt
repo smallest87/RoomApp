@@ -15,8 +15,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val db = Room.databaseBuilder(
-                applicationContext,
-                BookDatabase::class.java, "sampingan_database"
+                context = applicationContext,
+                klass = BookDatabase::class.java,
+                name = "book_database"
         ).build()
 
         bookDao = db.bookDao()
@@ -29,9 +30,27 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             //Insert
             Log.i("MyTAG","*****     Inserting 3 Books     **********")
-            bookDao.insertBook(Book(0,"Java","Alex"))
-            bookDao.insertBook(Book(0,"PHP","Mike"))
-            bookDao.insertBook(Book(0,"Kotlin","Amelia"))
+            bookDao.insertBook(
+                Book(
+                    id = 0,
+                    name = "Java",
+                    author = "Alex"
+                )
+            )
+            bookDao.insertBook(
+                Book(
+                    id = 0,
+                    name = "PHP",
+                    author = "Mike"
+                )
+            )
+            bookDao.insertBook(
+                Book(
+                    id = 0,
+                    name = "Kotlin",
+                    author = "Amelia"
+                )
+            )
             Log.i("MyTAG","*****     Inserted 3 Books       **********")
 
             //Queery
@@ -53,13 +72,22 @@ class MainActivity : AppCompatActivity() {
 
             //delete
             Log.i("MyTAG","*****       Deleting a book      **********")
-            bookDao.deleteBook(Book(2,"Kotlin","Amelia"))
+            bookDao.deleteBook(
+                Book(
+                    id = 22,
+                    name = "Java",
+                    author = "Alex"
+                )
+            )
+
             //Query
             val books3 = bookDao.getAllBooks()
             Log.i("MyTAG","*****   ${books3.size} books there *****")
             for(book in books3){
                 Log.i("MyTAG","id: ${book.id} name: ${book.name} author: ${book.author}")
             }
+
+//            bookDao.hapusSemua()
         }
 
     }

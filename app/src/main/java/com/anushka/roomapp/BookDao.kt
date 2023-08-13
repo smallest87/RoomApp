@@ -11,6 +11,9 @@ interface BookDao {
     @Query("SELECT * FROM books_table")
     fun getAllBooks(): List<Book>
 
+    @Query("DELETE FROM books_table")
+    suspend fun hapusSemua()
+
     @Update
     suspend fun updateBook(book: Book)
 
