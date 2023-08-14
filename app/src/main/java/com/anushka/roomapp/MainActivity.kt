@@ -9,7 +9,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var fungsiBookSiapPakai: BookDao
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         val roomDatabaseMatang = roomDatabaseBahan.build()
 
         fungsiBookSiapPakai = roomDatabaseMatang.beriFungsiBookDao()
+
         terapkanRoomDB()
 
     }
