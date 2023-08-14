@@ -9,42 +9,48 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var bookDao: BookDao
+    private lateinit var fungsiBookSiapPakai: BookDao
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val db = Room.databaseBuilder(
+        val roomDatabaseBahan = Room.databaseBuilder(
                 context = applicationContext,
                 klass = BookDatabase::class.java,
                 name = "book_database"
-        ).build()
+        )
 
-        bookDao = db.bookDao()
-        testDB()
+        val roomDatabaseMatang = roomDatabaseBahan.build()
+
+        fungsiBookSiapPakai = roomDatabaseMatang.beriFungsiBookDao()
+        terapkanRoomDB()
 
     }
 
-    private fun testDB(){
+    private fun terapkanRoomDB(){
 
         lifecycleScope.launch(Dispatchers.IO) {
+
+            Log.i("MyTAG","*****     Menghapus semua baris data     **********")
+            fungsiBookSiapPakai.hapusSemuaBarisData()
+
             //Insert
             Log.i("MyTAG","*****     Inserting 3 Books     **********")
-            bookDao.insertBook(
+            fungsiBookSiapPakai.insertBook(
                 Book(
                     id = 0,
                     name = "Java",
                     author = "Alex"
                 )
             )
-            bookDao.insertBook(
+            fungsiBookSiapPakai.insertBook(
                 Book(
                     id = 0,
                     name = "PHP",
                     author = "Mike"
                 )
             )
-            bookDao.insertBook(
+            fungsiBookSiapPakai.insertBook(
                 Book(
                     id = 0,
                     name = "Kotlin",
@@ -54,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             Log.i("MyTAG","*****     Inserted 3 Books       **********")
 
             //Queery
-            val books = bookDao.getAllBooks()
+            val books = fungsiBookSiapPakai.getAllBooks()
             Log.i("MyTAG","*****   ${books.size} books there *****")
             for(book in books){
                 Log.i("MyTAG","id: ${book.id} name: ${book.name} author: ${book.author}")
@@ -62,26 +68,26 @@ class MainActivity : AppCompatActivity() {
 
             //Update
             Log.i("MyTAG","*****      Updating a book      **********")
-            bookDao.updateBook(Book(1,"PHPUpdated","Mike"))
+            fungsiBookSiapPakai.updateBook(Book(1,"PHPUpdated","Mike"))
             //Queery
-            val books2 = bookDao.getAllBooks()
+            val books2 = fungsiBookSiapPakai.getAllBooks()
             Log.i("MyTAG","*****   ${books2.size} books there *****")
             for(book in books2){
                 Log.i("MyTAG","id: ${book.id} name: ${book.name} author: ${book.author}")
             }
 
             //delete
-            Log.i("MyTAG","*****       Deleting a book      **********")
-            bookDao.deleteBook(
-                Book(
-                    id = 22,
-                    name = "Java",
-                    author = "Alex"
-                )
-            )
+//            Log.i("MyTAG","*****       Deleting a book      **********")
+//            fungsiRoomSiapPakai.deleteBook(
+//                Book(
+//                    id = 22,
+//                    name = "Java",
+//                    author = "Alex"
+//                )
+//            )
 
             //Query
-            val books3 = bookDao.getAllBooks()
+            val books3 = fungsiBookSiapPakai.getAllBooks()
             Log.i("MyTAG","*****   ${books3.size} books there *****")
             for(book in books3){
                 Log.i("MyTAG","id: ${book.id} name: ${book.name} author: ${book.author}")

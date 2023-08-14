@@ -1,7 +1,6 @@
 package com.anushka.roomapp
 
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookDao {
@@ -12,7 +11,7 @@ interface BookDao {
     fun getAllBooks(): List<Book>
 
     @Query("DELETE FROM books_table")
-    suspend fun hapusSemua()
+    suspend fun hapusSemuaBarisData()
 
     @Update
     suspend fun updateBook(book: Book)
